@@ -1,0 +1,28 @@
+<!-- templates/index.html -->
+{% extends 'base.html' %}
+
+{% block title %}Welcome to School App{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">Welcome to School App</h1>
+    
+    <!-- Add buttons for navigation -->
+    <h2>Students:</h2>
+    <a href="{{ url_for('student_bp.list_students') }}" class="btn btn-primary mr-2">Student List</a>
+    <a href="{{ url_for('student_bp.add_student') }}" class="btn btn-success">Add Student</a>
+
+    <!-- Add links for course-related pages -->
+    <h2 class="mt-4">Courses:</h2>
+    <a href="{{ url_for('courses.create_course_page') }}" class="btn btn-info mt-2">Create New Course</a>
+    <a href="{{ url_for('courses.get_all_courses') }}" class="btn btn-info mt-2">List All Courses</a>
+
+    <!-- Add links for department-related pages -->
+    <h2 class="mt-4">Departments:</h2>
+    <a href="{{ url_for('departments.create_department_page') }}" class="btn btn-info mt-2">Create New Department</a>
+    <a href="{{ url_for('departments.departments') }}" class="btn btn-info mt-2">List All Departments</a>
+
+    <!-- Add links for faculty-related pages -->
+    <h2 class="mt-4">Faculty:</h2>
+    <a href="{{ url_for('faculty.create_faculty') }}" class="btn btn-info mt-2">Create New Faculty</a>
+    <a href="{{ url_for('faculty.list_faculty') }}" class="btn btn-info mt-2">List All Faculty</a>  <!-- Added link to faculty list page -->
+{% endblock %}
