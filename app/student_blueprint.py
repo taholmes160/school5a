@@ -1,7 +1,8 @@
 # app/student_blueprint.py
-from flask import Blueprint, render_template, redirect, url_for
+from flask import Blueprint, render_template, redirect, url_for, request
 from app.forms import StudentForm
 from models import db, Student, Gender, GradeLevel  # Updated import
+from sqlalchemy import or_  
 
 student_bp = Blueprint('student_bp', __name__, url_prefix='/students')
 
@@ -64,3 +65,16 @@ def delete_student(student_id):
     db.session.delete(student)
     db.session.commit()
     return redirect(url_for('student_bp.list_students'))
+
+
+@student_bp.route('/search', methods=['GET'])
+def search_students():
+    search_term = request.args.get('q', '')
+    students = db.session.query(Student).join(GradeLevel).filter(
+        or_(
+            Student.student_fname.contains(search_term),
+            Student.student_lname.contains(search_term),
+            GradeLevel.grade_name.contains(search_term)
+        )
+    ).all()
+    return render_template('students.html', students=students)

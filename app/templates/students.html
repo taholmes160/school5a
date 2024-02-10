@@ -6,6 +6,10 @@
 {% block content %}
     <h1 class="mb-4">Student List</h1>
     <div class="table-responsive">
+        <!-- Add this above the table -->
+        <form id="search-form" class="mb-4">
+            <input type="text" id="search-input" placeholder="Search by first name, last name, or grade" class="form-control">
+        </form>
         <table class="table table-bordered table-hover">
             <thead class="thead-dark">
                 <tr>
@@ -38,4 +42,15 @@
             </tbody>
         </table>
     </div>
+    <!-- Add this at the end of the file -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#search-form').on('submit', function(e) {
+            e.preventDefault();
+            var search_term = $('#search-input').val();
+            window.location.href = "{{ url_for('student_bp.search_students') }}?q=" + encodeURIComponent(search_term);
+        });
+    });
+    </script>
 {% endblock %}
