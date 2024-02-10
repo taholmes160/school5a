@@ -3,6 +3,21 @@
 
 {% block title %}Students{% endblock %}
 
+{% macro sortable_column_header(column, title) %}
+    <th>
+        <a href="{{ url_for('student_bp.list_students', sort=column, direction='desc' if sort_column == column and sort_direction == 'asc' else 'asc') }}">
+            {{ title }}
+            {% if sort_column == column %}
+                {% if sort_direction == 'asc' %}
+                    &#9650;  <!-- Up arrow -->
+                {% else %}
+                    &#9660;  <!-- Down arrow -->
+                {% endif %}
+            {% endif %}
+        </a>
+    </th>
+{% endmacro %}
+
 {% block content %}
     <h1 class="mb-4">Student List</h1>
     <div class="table-responsive">
@@ -13,12 +28,12 @@
         <table class="table table-bordered table-hover">
             <thead class="thead-dark">
                 <tr>
-                    <th>ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Age</th>
-                    <th>Gender</th>
-                    <th>Grade</th>
+                    {{ sortable_column_header('student_id', 'ID') }}
+                    {{ sortable_column_header('student_fname', 'First Name') }}
+                    {{ sortable_column_header('student_lname', 'Last Name') }}
+                    {{ sortable_column_header('student_age', 'Age') }}
+                    {{ sortable_column_header('gender.gender_name', 'Gender') }}
+                    {{ sortable_column_header('grade_level.grade_name', 'Grade') }}
                     <th>Actions</th>  <!-- Add Actions column header -->
                 </tr>
             </thead>

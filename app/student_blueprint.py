@@ -2,14 +2,21 @@
 from flask import Blueprint, render_template, redirect, url_for, request
 from app.forms import StudentForm
 from models import db, Student, Gender, GradeLevel  # Updated import
-from sqlalchemy import or_  
+from sqlalchemy import or_, asc, desc 
 
 student_bp = Blueprint('student_bp', __name__, url_prefix='/students')
 
 @student_bp.route('/')
 def list_students():
-    students = Student.query.all()
-    return render_template('students.html', students=students)
+    sort_column = request.args.get('sort', 'student_id')  # Default sort column is 'student_id'
+    sort_direction = request.args.get('direction', 'asc')  # Default sort direction is 'asc'
+
+    if sort_direction == 'desc':
+        students = Student.query.order_by(desc(sort_column)).all()
+    else:
+        students = Student.query.order_by(asc(sort_column)).all()
+
+    return render_template('students.html', students=students, sort_column=sort_column, sort_direction=sort_direction)
 
 @student_bp.route('/add', methods=['GET', 'POST'])
 def add_student():
