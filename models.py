@@ -56,3 +56,12 @@ class Department(db.Model):
     department_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     department_name = db.Column(db.String(50), nullable=False)
 
+class Title(db.Model):
+    __tablename__ = 'tbl_titles'
+    title_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    title_name = db.Column(db.String(100), nullable=False)
+    title_description = db.Column(db.Text, nullable=True)
+
+    # You can add relationships here if needed in the future
+    # For example, if each employee has one title, you would add a relationship to the Employee model
+    # employees = db.relationship('Employee', backref='title', lazy=True)
