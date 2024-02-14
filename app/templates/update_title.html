@@ -1,0 +1,36 @@
+<!-- templates/update_title.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Update Title</h2>
+    <form method="POST" action="{{ url_for('titles.update_title', title_id=title_id) }}">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.title_name.label(class="form-label") }}
+            {{ form.title_name(class="form-control") }}
+            {% if form.title_name.errors %}
+                <div class="alert alert-danger">
+                    {% for error in form.title_name.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.title_description.label(class="form-label") }}
+            {{ form.title_description(class="form-control") }}
+            {% if form.title_description.errors %}
+                <div class="alert alert-danger">
+                    {% for error in form.title_description.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+    </form>
+</div>
+{% endblock %}

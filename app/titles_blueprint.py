@@ -19,18 +19,19 @@ def create_title():
 @titles_blueprint.route('/titles')
 def list_titles():
     titles = Title.query.all()
-    return render_template('titles.list_titles.html', titles=titles)
+    return render_template('list_titles.html', titles=titles)
 
 @titles_blueprint.route('/update/<int:title_id>', methods=['GET', 'POST'])
 def update_title(title_id):
     title = Title.query.get_or_404(title_id)
-    if request.method == 'POST':
-        title.title_name = request.form['title_name']
-        title.title_description = request.form.get('title_description', '')
+    form = TitleForm(obj=title)  # Pre-populate the form with the current title data
+    if form.validate_on_submit():
+        title.title_name = form.title_name.data
+        title.title_description = form.title_description.data
         db.session.commit()
         flash('Title updated successfully!', 'success')
-        return redirect(url_for('list_titles'))
-    return render_template('titles.update_title.html', title=title)
+        return redirect(url_for('titles.list_titles'))
+    return render_template('update_title.html', form=form, title_id=title_id)
 
 @titles_blueprint.route('/delete/<int:title_id>', methods=['POST'])
 def delete_title(title_id):

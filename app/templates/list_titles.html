@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Titles{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">Title List</h1>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Title Name</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for title in titles %}
+                    <tr>
+                        <td>{{ title.title_name }}</td>
+                        <td>{{ title.title_description }}</td>
+                        <td>
+                            <a href="{{ url_for('titles.update_title', title_id=title.title_id) }}" class="btn btn-primary btn-sm">Update</a>
+                            <form method="post" action="{{ url_for('titles.delete_title', title_id=title.title_id) }}" style="display:inline;">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this title?')">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ url_for('titles.create_title') }}" class="btn btn-success btn-sm">Create New Title</a>
+        <a href="{{ url_for('index_bp.index') }}" class="btn btn-secondary btn-sm">Back to Home</a>
+    </div>
+{% endblock %}
