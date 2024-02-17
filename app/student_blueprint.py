@@ -85,3 +85,15 @@ def search_students():
         )
     ).all()
     return render_template('students.html', students=students)
+
+@student_blueprint.route('/student/<int:student_id>/add_comment', methods=['GET', 'POST'])
+def add_comment(student_id):
+    student = Student.query.get_or_404(student_id)
+    form = CommentForm()
+    if form.validate_on_submit():
+        comment = Comment(comment_text=form.comment_text.data, student_id=student_id)
+        db.session.add(comment)
+        db.session.commit()
+        flash('Comment added successfully!', 'success')
+        return redirect(url_for('students.student_detail', student_id=student_id))
+    return render_template('add_comment.html', form=form, student=student)

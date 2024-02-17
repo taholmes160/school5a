@@ -46,5 +46,12 @@ class EmployeeForm(FlaskForm):
         super(EmployeeForm, self).__init__(*args, **kwargs)
         self.employee_dept_id.choices = [(d.department_id, d.department_name) for d in Department.query.order_by('department_name')]
         self.employee_title_id.choices = [(t.title_id, t.title_name) for t in Title.query.order_by('title_name')]
-    
 
+class CommentForm(FlaskForm):
+    comment_text = TextAreaField('Comment', validators=[DataRequired()])
+    author_id = SelectField('Author', coerce=int, validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+    def __init__(self, *args, **kwargs):
+        super(CommentForm, self).__init__(*args, **kwargs)
+        self.author_id.choices = [(e.employee_id, e.employee_fname + ' ' + e.employee_lname) for e in Employee.query.order_by(Employee.employee_lname).all()]

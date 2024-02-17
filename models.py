@@ -1,6 +1,7 @@
 # models.py
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
+from datetime import datetime
 
 db = SQLAlchemy()
 
@@ -77,3 +78,14 @@ class Employee(db.Model):
 
     # Relationships
     title = relationship('Title', backref='employees', lazy=True)
+    
+class Comment(db.Model):
+    __tablename__ = 'tbl_comments'
+    comment_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    comment_text = db.Column(db.Text, nullable=False)
+    student_id = db.Column(db.Integer, db.ForeignKey('tbl_student.student_id'), nullable=False)
+    author_id = db.Column(db.Integer, db.ForeignKey('tbl_employees.employee_id'), nullable=False)  # Assuming the author is an employee
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+    student = relationship('Student', backref='comments')
+    author = relationship('Employee', backref='authored_comments')  # Assuming the author is an employee
