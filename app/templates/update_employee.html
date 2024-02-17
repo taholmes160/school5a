@@ -1,0 +1,60 @@
+<!-- templates/edit_employee.html -->
+{% extends 'base.html' %}
+
+{% block title %}Edit Employee{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Edit Employee</h2>
+    <form method="POST" action="{{ url_for('employees.update_employee', employee_id=employee_id) }}">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.employee_fname.label(class="form-label") }}
+            {{ form.employee_fname(class="form-control") }}
+            {% if form.employee_fname.errors %}
+                <div class="alert alert-danger">
+                    {% for error in form.employee_fname.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.employee_lname.label(class="form-label") }}
+            {{ form.employee_lname(class="form-control") }}
+            {% if form.employee_lname.errors %}
+                <div class="alert alert-danger">
+                    {% for error in form.employee_lname.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.employee_dept_id.label(class="form-label") }}
+            {{ form.employee_dept_id(class="form-control") }}
+            {% if form.employee_dept_id.errors %}
+                <div class="alert alert-danger">
+                    {% for error in form.employee_dept_id.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.employee_title_id.label(class="form-label") }}
+            {{ form.employee_title_id(class="form-control") }}
+            {% if form.employee_title_id.errors %}
+                <div class="alert alert-danger">
+                    {% for error in form.employee_title_id.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+    </form>
+</div>
+{% endblock %}

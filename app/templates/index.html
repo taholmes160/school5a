@@ -26,4 +26,9 @@
     <a href="{{ url_for('titles.list_titles') }}" class="btn btn-info mt-2">List All Titles</a>
     <a href="{{ url_for('titles.create_title') }}" class="btn btn-info mt-2">Create New Title</a>
 
-{% endblock %}
+    <!-- Add link for creating employees -->
+    <h2 class="mt-4">Employees:</h2>
+    <a href="{{ url_for('employees.create_employee') }}" class="btn btn-info mt-2">Create New Employee</a> 
+    <a href="{{ url_for('employees.list_employees') }}" class="btn btn-info mt-2">List Employees</a>
+
+    {% endblock %}
