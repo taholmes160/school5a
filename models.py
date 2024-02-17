@@ -20,7 +20,7 @@ class Course(db.Model):
     course_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     course_name = db.Column(db.String(255), nullable=False)
     department_id = db.Column(db.Integer, db.ForeignKey('tbl_departments.department_id'), nullable=False)
-    department = db.relationship('Department', backref='courses')
+    department = db.relationship('Department', backref='courses', lazy=True)
     sections = db.relationship('Section', backref='course', lazy=True)
 
 class Section(db.Model):
@@ -52,12 +52,10 @@ class Enrollment(db.Model):
     section_id = db.Column(db.Integer, db.ForeignKey('tbl_sections.section_id'), nullable=False)
     
 class Department(db.Model):
-        __tablename__ = 'tbl_departments'
-        department_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-        department_name = db.Column(db.String(50), nullable=False)
-        employees = db.relationship('Employee', backref='department', lazy=True)
-        courses = db.relationship('Course', backref='department', lazy=True)  # Assuming you want this relationship as well
-    
+    __tablename__ = 'tbl_departments'
+    department_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    department_name = db.Column(db.String(50), nullable=False)
+    employees = db.relationship('Employee', backref='department', lazy=True)
 
 class Title(db.Model):
     __tablename__ = 'tbl_titles'
@@ -67,7 +65,8 @@ class Title(db.Model):
 
     # You can add relationships here if needed in the future
     # For example, if each employee has one title, you would add a relationship to the Employee model
-    employees = db.relationship('Employee', backref='title', lazy=True)
+    # employees = db.relationship('Employee', backref='title', lazy=True)
+
 class Employee(db.Model):
     __tablename__ = 'tbl_employees'
     employee_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -77,5 +76,4 @@ class Employee(db.Model):
     employee_title_id = db.Column(db.Integer, db.ForeignKey('tbl_titles.title_id'), nullable=False)
 
     # Relationships
-    department = relationship('Department', backref='employees')
-    title = relationship('Title', backref='employees')
+    title = relationship('Title', backref='employees', lazy=True)
