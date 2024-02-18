@@ -1,7 +1,7 @@
 # app/student_blueprint.py
 from flask import Blueprint, render_template, redirect, url_for, request
-from app.forms import StudentForm, UpdateStudentForm
-from models import db, Student, Gender, GradeLevel  # Updated import
+from app.forms import StudentForm, UpdateStudentForm, CommentForm
+from models import db, Student, Gender, GradeLevel, Comment, Employee  # Updated import
 from sqlalchemy import or_, asc, desc 
 
 student_bp = Blueprint('student_bp', __name__, url_prefix='/students')
