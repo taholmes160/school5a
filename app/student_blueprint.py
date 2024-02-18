@@ -1,5 +1,5 @@
 # app/student_blueprint.py
-from flask import Blueprint, render_template, redirect, url_for, request
+from flask import Blueprint, render_template, redirect, url_for, request, flash
 from app.forms import StudentForm, UpdateStudentForm, CommentForm
 from models import db, Student, Gender, GradeLevel, Comment, Employee  # Updated import
 from sqlalchemy import or_, asc, desc 
@@ -98,7 +98,6 @@ def add_comment(student_id):
         return redirect(url_for('students.student_detail', student_id=student_id))
     return render_template('add_comment.html', form=form, student=student)
 
-# Add a new route for displaying and updating student details
 @student_bp.route('/student/<int:student_id>', methods=['GET', 'POST'])
 def student_detail(student_id):
     student = Student.query.get_or_404(student_id)
@@ -110,6 +109,8 @@ def student_detail(student_id):
     form.student_gender_id.choices = gender_choices
     form.student_level_id.choices = level_choices
 
+    comment_form = CommentForm()  # Add CommentForm for adding comments
+
     if form.validate_on_submit():
         student.student_fname = form.student_fname.data
         student.student_lname = form.student_lname.data
@@ -117,8 +118,13 @@ def student_detail(student_id):
         student.student_gender_id = form.student_gender_id.data
         student.grade_level_id = form.student_level_id.data
 
-        db.session.commit() 
+        db.session.commit()
         flash('Student details updated successfully!', 'success')
         return redirect(url_for('student_bp.student_detail', student_id=student_id))
 
-    return render_template('student_detail.html', form=form, student=student)
+    if comment_form.validate_on_submit():
+        # Process comment form submission here
+        flash('Comment added successfully!', 'success')
+        return redirect(url_for('student_bp.student_detail', student_id=student_id))
+
+    return render_template('student_detail.html', form=form, student=student, comment_form=comment_form)

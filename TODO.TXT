@@ -3,4 +3,5 @@ create sections route - can this be automated?  Ask for how many sections we wan
 Add filter to courses page (by grade or dept)
 student comments
 student pictures
-login / authentication / authorization <i class="fa fa-assistive-listening-systems" aria-hidden="true"></i>
+login / authentication / authorization 
+debug why comments are not getting written to the db

@@ -1,42 +1,60 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
 <div class="container">
-    <h1>Student Details</h1>
-    <hr>
     <div class="row">
         <div class="col-md-6">
-            <h3>Student Information</h3>
-            <p><strong>Name:</strong> {{ student.student_fname }} {{ student.student_lname }}</p>
-            <p><strong>Age:</strong> {{ student.student_age }}</p>
-            <p><strong>Gender:</strong> {{ student.gender.gender_name }}</p>
-            <p><strong>Grade Level:</strong> {{ student.grade_level.grade_name }}</p>
+            <h1>Student Details</h1>
+            <p>Student Name: {{ student.student_fname }} {{ student.student_lname }}</p>
+            <p>Student Age: {{ student.student_age }}</p>
+            <p>Gender: {{ student.gender.gender_name }}</p>
+            <p>Grade Level: {{ student.grade_level.grade_name }}</p>
+
+            <h2>Comments</h2>
+            <ul>
+                {% for comment in student.comments %}
+                    <li>{{ comment.comment_text }} - {{ comment.author.employee_fname }} {{ comment.author.employee_lname }}</li>
+                {% endfor %}
+            </ul>
+
+            <h2>Add Comment</h2>
+            <form method="POST">
+                {{ comment_form.hidden_tag() }}
+                <div class="form-group">
+                    {{ comment_form.comment_text.label(class="form-label") }}: {{ comment_form.comment_text(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ comment_form.author_id.label(class="form-label") }}: {{ comment_form.author_id(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ comment_form.submit(class="btn btn-primary") }}
+                </div>
+                {{ comment_form.csrf_token }}
+            </form>
         </div>
         <div class="col-md-6">
-            <h3>Update Student Details</h3>
+            <h2>Update Student Details</h2>
             <form method="POST">
                 {{ form.hidden_tag() }}
                 <div class="form-group">
-                    {{ form.student_fname.label(class="form-label") }}
-                    {{ form.student_fname(class="form-control") }}
+                    {{ form.student_fname.label(class="form-label") }}: {{ form.student_fname(class="form-control") }}
                 </div>
                 <div class="form-group">
-                    {{ form.student_lname.label(class="form-label") }}
-                    {{ form.student_lname(class="form-control") }}
+                    {{ form.student_lname.label(class="form-label") }}: {{ form.student_lname(class="form-control") }}
                 </div>
                 <div class="form-group">
-                    {{ form.student_age.label(class="form-label") }}
-                    {{ form.student_age(class="form-control") }}
+                    {{ form.student_age.label(class="form-label") }}: {{ form.student_age(class="form-control") }}
                 </div>
                 <div class="form-group">
-                    {{ form.student_gender_id.label(class="form-label") }}
-                    {{ form.student_gender_id(class="form-control") }}
+                    {{ form.student_gender_id.label(class="form-label") }}: {{ form.student_gender_id(class="form-control") }}
                 </div>
                 <div class="form-group">
-                    {{ form.student_level_id.label(class="form-label") }}
-                    {{ form.student_level_id(class="form-control") }}
+                    {{ form.student_level_id.label(class="form-label") }}: {{ form.student_level_id(class="form-control") }}
                 </div>
-                <button type="submit" class="btn btn-primary">Update</button>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-primary") }}
+                </div>
+                {{ form.csrf_token }}
             </form>
         </div>
     </div>
