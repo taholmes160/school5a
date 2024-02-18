@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Student Details</h1>
+    <hr>
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Student Information</h3>
+            <p><strong>Name:</strong> {{ student.student_fname }} {{ student.student_lname }}</p>
+            <p><strong>Age:</strong> {{ student.student_age }}</p>
+            <p><strong>Gender:</strong> {{ student.gender.gender_name }}</p>
+            <p><strong>Grade Level:</strong> {{ student.grade_level.grade_name }}</p>
+        </div>
+        <div class="col-md-6">
+            <h3>Update Student Details</h3>
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                    {{ form.student_fname.label(class="form-label") }}
+                    {{ form.student_fname(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ form.student_lname.label(class="form-label") }}
+                    {{ form.student_lname(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ form.student_age.label(class="form-label") }}
+                    {{ form.student_age(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ form.student_gender_id.label(class="form-label") }}
+                    {{ form.student_gender_id(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ form.student_level_id.label(class="form-label") }}
+                    {{ form.student_level_id(class="form-control") }}
+                </div>
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

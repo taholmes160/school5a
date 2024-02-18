@@ -2,19 +2,15 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField, SubmitField, SelectField,TextAreaField
 from wtforms.validators import DataRequired, Length
-from models import Gender, GradeLevel, Department, Title
+from models import Gender, GradeLevel, Department, Title, Employee
 
 class StudentForm(FlaskForm):
     student_fname = StringField('First Name', validators=[DataRequired()])
     student_lname = StringField('Last Name', validators=[DataRequired()])
     student_age = IntegerField('Age', validators=[DataRequired()])
-    
-    # Update choices dynamically from the database
     student_gender_id = SelectField('Gender', coerce=int, validators=[DataRequired()])
     student_level_id = SelectField('Grade', coerce=int, validators=[DataRequired()])
-
     submit = SubmitField('Submit')
-
 
 class CourseForm(FlaskForm):
     course_name = StringField('Course Name', validators=[DataRequired()])
@@ -55,3 +51,11 @@ class CommentForm(FlaskForm):
     def __init__(self, *args, **kwargs):
         super(CommentForm, self).__init__(*args, **kwargs)
         self.author_id.choices = [(e.employee_id, e.employee_fname + ' ' + e.employee_lname) for e in Employee.query.order_by(Employee.employee_lname).all()]
+        
+class UpdateStudentForm(FlaskForm):
+    student_fname = StringField('First Name', validators=[DataRequired()])
+    student_lname = StringField('Last Name', validators=[DataRequired()])
+    student_age = IntegerField('Age', validators=[DataRequired()])
+    student_gender_id = SelectField('Gender', coerce=int, validators=[DataRequired()])
+    student_level_id = SelectField('Grade', coerce=int, validators=[DataRequired()])
+    submit = SubmitField('Update')

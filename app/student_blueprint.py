@@ -1,6 +1,6 @@
 # app/student_blueprint.py
 from flask import Blueprint, render_template, redirect, url_for, request
-from app.forms import StudentForm
+from app.forms import StudentForm, UpdateStudentForm
 from models import db, Student, Gender, GradeLevel  # Updated import
 from sqlalchemy import or_, asc, desc 
 
@@ -86,7 +86,7 @@ def search_students():
     ).all()
     return render_template('students.html', students=students)
 
-@student_blueprint.route('/student/<int:student_id>/add_comment', methods=['GET', 'POST'])
+@student_bp.route('/student/<int:student_id>/add_comment', methods=['GET', 'POST'])
 def add_comment(student_id):
     student = Student.query.get_or_404(student_id)
     form = CommentForm()
@@ -97,3 +97,28 @@ def add_comment(student_id):
         flash('Comment added successfully!', 'success')
         return redirect(url_for('students.student_detail', student_id=student_id))
     return render_template('add_comment.html', form=form, student=student)
+
+# Add a new route for displaying and updating student details
+@student_bp.route('/student/<int:student_id>', methods=['GET', 'POST'])
+def student_detail(student_id):
+    student = Student.query.get_or_404(student_id)
+    form = UpdateStudentForm(obj=student)
+
+    gender_choices = [(gender.gender_id, gender.gender_name) for gender in Gender.query.all()]
+    level_choices = [(level.grade_id, level.grade_name) for level in GradeLevel.query.all()]
+
+    form.student_gender_id.choices = gender_choices
+    form.student_level_id.choices = level_choices
+
+    if form.validate_on_submit():
+        student.student_fname = form.student_fname.data
+        student.student_lname = form.student_lname.data
+        student.student_age = form.student_age.data
+        student.student_gender_id = form.student_gender_id.data
+        student.grade_level_id = form.student_level_id.data
+
+        db.session.commit() 
+        flash('Student details updated successfully!', 'success')
+        return redirect(url_for('student_bp.student_detail', student_id=student_id))
+
+    return render_template('student_detail.html', form=form, student=student)
