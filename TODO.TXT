@@ -4,4 +4,35 @@ Add filter to courses page (by grade or dept)
 student comments
 student pictures
 login / authentication / authorization 
-debug why comments are not getting written to the db
+Develop a parents portal
+implement homework
+
+
+User Model Integration Steps:
+Define Custom User Models:
+
+Create custom user models that represent students and employees in your application. These models will interact with the existing tbl_student and tbl_employees tables.
+User Model Configuration:
+
+Define the necessary fields in the custom user models to match the columns in the tbl_student and tbl_employees tables, such as username, email, password hash, and any additional fields required for authentication and authorization.
+User Datastore Setup:
+
+Create a custom user datastore that interacts with the existing tables (tbl_student and tbl_employees) to manage user data, roles, and permissions. This datastore will be used by Flask-Security for user management.
+Flask-Security Integration:
+
+Configure Flask-Security to work with the custom user models and user datastores. Initialize Flask-Security with the custom user datastores and user models in your Flask application.
+Role Definitions:
+
+Define roles for students and employees within Flask-Security using the RoleMixin class. Assign roles and permissions as needed for each user type.
+Authentication and Authorization:
+
+Implement authentication and authorization logic using Flask-Security decorators and methods to protect routes and resources based on user roles.
+Role-Based Access Control (RBAC):
+
+Utilize Flask-Security's role-based access control features to restrict access to specific routes or resources based on the roles assigned to students and employees.
+Testing and Validation:
+
+Test the authentication and authorization flow to ensure that users (students and employees) can authenticate successfully and access resources based on their roles.
+Error Handling and Logging:
+
+Implement error handling mechanisms and logging to track authentication and authorization-related issues for debugging and monitoring purposes.
