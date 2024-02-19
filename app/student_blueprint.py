@@ -1,10 +1,13 @@
 # app/student_blueprint.py
+import logging
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from app.forms import StudentForm, UpdateStudentForm, CommentForm
 from models import db, Student, Gender, GradeLevel, Comment, Employee  # Updated import
 from sqlalchemy import or_, asc, desc 
 
 student_bp = Blueprint('student_bp', __name__, url_prefix='/students')
+# Configure logging
+logging.basicConfig(level=logging.DEBUG)
 
 @student_bp.route('/')
 def list_students():
@@ -109,7 +112,7 @@ def student_detail(student_id):
     form.student_gender_id.choices = gender_choices
     form.student_level_id.choices = level_choices
 
-    comment_form = CommentForm()  # Add CommentForm for adding comments
+    comment_form = CommentForm()
 
     if form.validate_on_submit():
         student.student_fname = form.student_fname.data
@@ -123,8 +126,18 @@ def student_detail(student_id):
         return redirect(url_for('student_bp.student_detail', student_id=student_id))
 
     if comment_form.validate_on_submit():
-        # Process comment form submission here
-        flash('Comment added successfully!', 'success')
-        return redirect(url_for('student_bp.student_detail', student_id=student_id))
+        try:
+            new_comment = Comment(
+                comment_text=comment_form.comment_text.data,
+                student_id=student_id,
+                author_id=comment_form.author_id.data
+            )
+            db.session.add(new_comment)
+            db.session.commit()
+            flash('Comment added successfully!', 'success')
+            return redirect(url_for('student_bp.student_detail', student_id=student_id))
+        except Exception as e:
+            logging.error(f'Error adding comment: {str(e)}')
+            flash('An error occurred while adding the comment. Please try again.', 'error')
 
     return render_template('student_detail.html', form=form, student=student, comment_form=comment_form)

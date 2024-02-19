@@ -13,7 +13,10 @@
             <h2>Comments</h2>
             <ul>
                 {% for comment in student.comments %}
-                    <li>{{ comment.comment_text }} - {{ comment.author.employee_fname }} {{ comment.author.employee_lname }}</li>
+                    <li>
+                        {{ comment.comment_text }} - {{ comment.author.employee_fname }} {{ comment.author.employee_lname }}
+                        <small>Created on: {{ comment.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</small>
+                    </li>
                 {% endfor %}
             </ul>
 
