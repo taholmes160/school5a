@@ -89,3 +89,21 @@ class Comment(db.Model):
 
     student = relationship('Student', backref='comments')
     author = relationship('Employee', backref='authored_comments')  # Assuming the author is an employee
+    
+    
+class Parent(db.Model):
+    __tablename__ = 'tbl_parents'
+    parent_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    parent_fname = db.Column(db.String(45), nullable=True)
+    parent_lname = db.Column(db.String(45), nullable=True)
+    parent_email = db.Column(db.String(100), unique=True, nullable=False)
+    parent_password = db.Column(db.String(255), nullable=False)
+    # Add any other fields specific to parents
+
+    children = db.relationship('Student', secondary='tbl_parent_student', backref='parents')
+
+# Association table for parent-student relationship
+parent_student = db.Table('tbl_parent_student',
+    db.Column('parent_id', db.Integer, db.ForeignKey('tbl_parents.parent_id'), primary_key=True),
+    db.Column('student_id', db.Integer, db.ForeignKey('tbl_student.student_id'), primary_key=True)
+)

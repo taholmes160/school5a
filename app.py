@@ -7,6 +7,7 @@ from app.courses_blueprint import courses_blueprint
 from app.department_blueprint import departments_blueprint  
 from app.titles_blueprint import titles_blueprint
 from app.employee_blueprint import employee_blueprint
+from app.parents_blueprint import parents_bp
 
 app, db = create_app()
 
@@ -17,6 +18,7 @@ app.register_blueprint(courses_blueprint, url_prefix='/courses')
 app.register_blueprint(departments_blueprint, url_prefix='/departments')
 app.register_blueprint(titles_blueprint, url_prefix='/titles')
 app.register_blueprint(employee_blueprint, url_prefix='/employees')
+app.register_blueprint(parents_bp, url_prefix='/parents')
 
 # Other app initialization code...
 with app.app_context():

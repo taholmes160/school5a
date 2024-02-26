@@ -31,4 +31,8 @@
     <a href="{{ url_for('employees.create_employee') }}" class="btn btn-info mt-2">Create New Employee</a> 
     <a href="{{ url_for('employees.list_employees') }}" class="btn btn-info mt-2">List Employees</a>
 
-    {% endblock %}
+    <!-- Add link for creating parents -->
+    <h2 class="mt-4">Parents:</h2>
+    <a href="{{ url_for('parents.create_parent') }}" class="btn btn-info mt-2">Add Parent</a>
+
+{% endblock %}

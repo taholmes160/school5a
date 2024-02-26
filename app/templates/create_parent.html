@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>Create a New Parent</h1>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.parent_fname.label(class="form-label") }}
+            {{ form.parent_fname(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.parent_lname.label(class="form-label") }}
+            {{ form.parent_lname(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.parent_email.label(class="form-label") }}
+            {{ form.parent_email(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.parent_password.label(class="form-label") }}
+            {{ form.parent_password(class="form-control") }}
+        </div>
+        <button type="submit" class="btn btn-primary">Create Parent</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,7 +1,7 @@
 # app/forms.py
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, SubmitField, SelectField,TextAreaField
-from wtforms.validators import DataRequired, Length
+from wtforms import StringField, IntegerField, SubmitField, SelectField,TextAreaField, PasswordField
+from wtforms.validators import DataRequired, Length, Email
 from models import Gender, GradeLevel, Department, Title, Employee
 
 class StudentForm(FlaskForm):
@@ -59,3 +59,10 @@ class UpdateStudentForm(FlaskForm):
     student_gender_id = SelectField('Gender', coerce=int, validators=[DataRequired()])
     student_level_id = SelectField('Grade', coerce=int, validators=[DataRequired()])
     submit = SubmitField('Update')
+    
+class ParentForm(FlaskForm):
+    parent_fname = StringField('First Name', validators=[DataRequired()])
+    parent_lname = StringField('Last Name', validators=[DataRequired()])
+    parent_email = StringField('Email', validators=[DataRequired(), Email()])
+    parent_password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Create Parent')
