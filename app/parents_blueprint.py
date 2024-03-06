@@ -3,18 +3,6 @@ from models import db, Parent
 from app.forms import ParentForm
 
 parents_bp = Blueprint('parents', __name__)
-
-# Define routes and views for parent CRUD operations here
-@parents_bp.route('/', methods=['GET'])
-def get_parents():
-    # Logic to fetch and display a list of parents
-    return 'List of Parents'
-
-@parents_bp.route('/<int:parent_id>', methods=['GET'])
-def get_parent(parent_id):
-    # Logic to fetch and display a specific parent
-    return f'Parent ID: {parent_id}'
-
 # Implement routes for creating, updating, and deleting parents as needed
 
 @parents_bp.route('/create', methods=['GET', 'POST'])
@@ -33,3 +21,8 @@ def create_parent():
         return redirect(url_for('parents.get_parents'))  # Redirect to the list of parents page after adding a new parent
     
     return render_template('create_parent.html', form=form)  # Pass the form object to the template
+
+@parents_bp.route('/', methods=['GET'])
+def get_parents():
+    parents = Parent.query.all()  # Fetch all parents from the database
+    return render_template('list_parents.html', parents=parents)

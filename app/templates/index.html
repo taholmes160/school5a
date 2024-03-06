@@ -21,6 +21,12 @@
     <a href="{{ url_for('departments.create_department_page') }}" class="btn btn-info mt-2">Create New Department</a>
     <a href="{{ url_for('departments.departments') }}" class="btn btn-info mt-2">List All Departments</a>
 
+    <!-- Add link for listing parents -->
+    <h2 class="mt-4">Parents:</h2>
+    <a href="{{ url_for('parents.get_parents') }}" class="btn btn-info mt-2">List All Parents</a>
+    <a href="{{ url_for('parents.create_parent') }}" class="btn btn-info mt-2">Create New Parent</a>
+    
+
     <!-- Add link for listing titles -->
     <h2 class="mt-4">Titles:</h2>
     <a href="{{ url_for('titles.list_titles') }}" class="btn btn-info mt-2">List All Titles</a>
@@ -30,9 +36,5 @@
     <h2 class="mt-4">Employees:</h2>
     <a href="{{ url_for('employees.create_employee') }}" class="btn btn-info mt-2">Create New Employee</a> 
     <a href="{{ url_for('employees.list_employees') }}" class="btn btn-info mt-2">List Employees</a>
-
-    <!-- Add link for creating parents -->
-    <h2 class="mt-4">Parents:</h2>
-    <a href="{{ url_for('parents.create_parent') }}" class="btn btn-info mt-2">Add Parent</a>
 
 {% endblock %}

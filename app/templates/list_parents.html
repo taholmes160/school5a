@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}List of Parents{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>List of Parents</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Parent ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for parent in parents %}
+            <tr>
+                <td>{{ parent.parent_id }}</td>
+                <td>{{ parent.parent_fname }}</td>
+                <td>{{ parent.parent_lname }}</td>
+                <td>{{ parent.parent_email }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
