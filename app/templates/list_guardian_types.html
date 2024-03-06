@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>List of Guardian Types</h1>
+    <ul class="list-group">
+        {% for guardian_type in guardian_types %}
+            <li class="list-group-item">{{ guardian_type.guardian_type_name }}: {{ guardian_type.guardian_type_description }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

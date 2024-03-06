@@ -66,3 +66,7 @@ class ParentForm(FlaskForm):
     parent_email = StringField('Email', validators=[DataRequired(), Email()])
     parent_password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Create Parent')
+    
+class GuardianTypeForm(FlaskForm):
+    guardian_type_name = StringField('Name', validators=[DataRequired()])
+    guardian_type_description = TextAreaField('Description')   
