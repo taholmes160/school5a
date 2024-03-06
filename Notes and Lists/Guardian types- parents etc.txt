@@ -1,0 +1,34 @@
+That sounds like a practical approach! By adding an option box to select parent types and populating it from a predefined list of guardian types, you can start capturing this information in your parent records. This allows you to lay the foundation for tracking parent types while keeping the system flexible for future expansion and refinement.
+
+Here's a general outline of how you can implement this in your system:
+
+Define Guardian Types in the Database:
+
+Create a table tbl_guardian_type in your database to store the different types of guardians or parent relationships.
+Populate the Guardian Types Table:
+
+Populate the tbl_guardian_type table with predefined guardian types such as Custodial Parent, Non-Custodial Parent, Step-Parent, Grandparent, etc.
+Update Parent Record Table:
+
+Add a field, such as guardian_type_id, to the parent record table to store the selected guardian type for each parent.
+Modify Parent Form:
+
+Update your ParentForm in forms.py to include a dropdown field for selecting the guardian type. Populate this dropdown field with options from the tbl_guardian_type table.
+Update Parent Creation Page:
+
+Update the parent creation page (create_parent.html) to include the dropdown field for selecting the guardian type.
+Handle Form Submission:
+
+Modify the create_parent() route in parents_blueprint.py to handle the submission of the parent form, including capturing the selected guardian type.
+Display Guardian Type in Parent Listing:
+
+When listing parents in the list_parents.html template, display the guardian type for each parent if applicable.
+By following these steps, you can start capturing and storing the guardian types for parent records in your system. This approach allows you to begin tracking this information while keeping the system adaptable for future enhancements and expansions.
+
+If you need further guidance on any specific step or encounter any challenges during the implementation, feel free to ask for assistance!
+
+
+tbl_guardian_type
+guardian_type_id
+guardian_type_name
+gardian_type_description

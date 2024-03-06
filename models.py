@@ -107,3 +107,13 @@ parent_student = db.Table('tbl_parent_student',
     db.Column('parent_id', db.Integer, db.ForeignKey('tbl_parents.parent_id'), primary_key=True),
     db.Column('student_id', db.Integer, db.ForeignKey('tbl_student.student_id'), primary_key=True)
 )
+
+class GuardianType(db.Model):
+    __tablename__ = 'tbl_guardian_type'
+
+    guardian_type_id = db.Column(db.Integer, primary_key=True)
+    guardian_type_name = db.Column(db.String(50), nullable=False)
+    guardian_type_description = db.Column(db.String(500))
+
+    def __repr__(self):
+        return f"GuardianType(guardian_type_id={self.guardian_type_id}, guardian_type_name={self.guardian_type_name})"
